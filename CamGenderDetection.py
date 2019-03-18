@@ -33,7 +33,7 @@ while(True):
     ret, frame = cap.read()
 
     dets = detector(frame, 0)
-
+    print (dets)
     if len(dets) > 0:
         faces = dlib.full_object_detections()
 
@@ -43,13 +43,13 @@ while(True):
         images = dlib.get_face_chips(frame, faces, size=64, padding=0.40)   # extract faces images
 
         for img in images:
-            rimg = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # roll to rgb
+            rimg = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # roll to rgb. the model need rgb images
 
             cv2.imshow('face', img) # display face image
 
             prediction = gpredictor.predict (rimg)
             if (len(prediction) > 0):
-                print (prediction)
+                #print (prediction)
                 c = np.argmax(prediction)
                 title = cat_name[c] + " " + str(prediction[0])
 
