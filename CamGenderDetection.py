@@ -10,7 +10,7 @@ class_names = ['male','female']
 print (cv2.getVersionString())
 
 face_predictor_path = 'shape_predictor_5_face_landmarks.dat'
-gender_predictor_path = 'model_23000_92.dat'
+gender_predictor_path = 'model_90000_96.dat'
 
 gpredictor = gc.GenderPredictor(gender_predictor_path)
 
@@ -33,7 +33,7 @@ while(True):
     ret, frame = cap.read()
 
     dets = detector(frame, 0)
-    print (dets)
+
     if len(dets) > 0:
         faces = dlib.full_object_detections()
 
@@ -55,6 +55,10 @@ while(True):
 
                 if abs(prediction[0][0] - prediction[0][1]) > 0.5:
                     cv2.putText(frame, title, (10,40), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,0))
+
+        for rec in dets:
+            cv2.rectangle(frame, (rec.tl_corner().x, rec.tl_corner().y),
+                          (rec.br_corner().x, rec.br_corner().y), (255, 0, 0))
 
 
     cv2.imshow('frame', frame)
